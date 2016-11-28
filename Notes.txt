@@ -1,0 +1,54 @@
+1. Local development box setup.
+- Install unbuntu on vmware workstation - Server 12.04 LTS - Use bridged networking
+- Apache2 - Web server
+- MySQL
+- FTP - to get our files on the virtual machine.
+- SSH(command line connectivity)
+- Create web directoty structure
+- Directory permissions
+- Install updates
+
+2. 
+- Login with the ubuntu user
+- sudo tasksel install lamp-server
+- password for MySQL
+- get the Windows machine IP
+- sudo vi /etc/mysql/my.conf to edit the MySQL configuration file.
+	* Find bind-address = 127.0.0.1 line
+	* Hit the Insert key and comment this line with a # (SHIFT+3)
+	* ESC and type :wq for write and quit.
+- mysql -u root -p
+ 	* GRANT ALL PRIVILEGES on *.* to root@WindowsIP IDENTIFIED BY 'my_password'
+ 	* exit;
+ 	* sudo service mysql restart
+ 	* sudo a2enmod rewrite
+ 	* sudo service apache2 restart
+- sudo apt-get install vsftpd
+- sudo vi /etc/vsftpd.conf
+	* Find # local_enable = YES and type X to delete the #
+	* Find # write_enable = YES and type X to delete the #
+	* ESC and Type :wq
+	* sudo service vsftpd restart
+	* sudo ifconfig -> The IP address
+	* Install Filezilla on Windows
+	   + File -> Site Manager -> New Site -> Name to ubuntu_symfony2 -> 
+	      # Configure Host(Linux IP address)
+	      # Login Type : Normal
+	      # User: yovan and password, then connect
+- Install Putty on Windows
+- sudo apt-get install openssh-server
+- Open Putty on Windows, enter Linux IP address, save session and then connect using Linux credentials.
+- In Putty:
+	 - sudo usermod -a -G www-data yovan => Add yovan to the www-data group
+	 - cd /var/www
+	 - ls => There should be a file named index.html there
+	 - sudo mkdir html
+	 - sudo chown www-data:www-data html/ => We have changed the owner to be the www-data user of the www-data group. Since yovan is in the group, we can now write in the folder.
+	 - sudo chmod 775 html/ => Set to write permission: Check on net
+	 - ls -l => We can see that the www-data has the rights on the html/ folder
+	 - exit; from Putty to make these changes take place
+	 - Rerun Putty 
+
+
+
+
